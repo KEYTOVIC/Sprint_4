@@ -1,5 +1,6 @@
 package tests;
 
+import PageObgect.utils.CookieConsentHandler;
 import com.example.config.Config;
 import jdk.jfr.Description;
 import org.junit.After;
@@ -7,8 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import PageObgect.OrderPage;
 
@@ -23,16 +22,6 @@ public class OrderProcessingTests {
         driver.get(Config.BASE_URL);
         wait = new WebDriverWait(driver, 3);
     }
-    /*private WebDriver driver;
-    private WebDriverWait wait;
-
-    @Before
-    public void setUp() {
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
-        driver.get(Config.BASE_URL);
-        wait = new WebDriverWait(driver, 10);
-    }*/
 
     @Test
     @Description("Позитивный кейс оформления заказа с верхней кнопки")
@@ -56,6 +45,9 @@ public class OrderProcessingTests {
     public void orderBottomProcessTests(){
         OrderPage objOrderPage = new OrderPage(driver, wait);
 
+        objOrderPage.scrollToElement();
+        CookieConsentHandler cookieHandler = new CookieConsentHandler(driver, wait);
+        cookieHandler.closeCookieConsentBanner();
         objOrderPage.clickOrderButtonBottom();
         objOrderPage.fillFirstOrderFormBottom("Тонни", "Старк", "Малибу-Поинт", "Лубянка", "86666666666");
         objOrderPage.fillLastOrderForm("01.02.2023", "Не торопитесь");

@@ -1,7 +1,9 @@
 package PageObgect;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,7 +18,7 @@ public class OrderPage {
 
     // Локаторы для кнопок заказа
     private By orderButtonTop = By.className("Button_Button__ra12g"); // Верхняя кнопка
-    private By orderButtonBottom = By.className("Button_Button__ra12g"); // Нижняя кнопка
+    private By orderButtonBottom = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button"); // Нижняя кнопка
 
     // Локаторы для заполнения заказа
     private By fieldName = By.xpath("//input[@placeholder='* Имя']");
@@ -44,10 +46,18 @@ public class OrderPage {
     // Проверка всплывающего окна
     private By textWouldOrder = By.xpath("//div[text()='Хотите оформить заказ?']");
     private By buttonYes = By.xpath("//button[text()='Да']");
-    private By orderCreated = By.xpath("//div[text()='Заказ оформлен']");
+
+    public void scrollToElement() {
+        WebElement element = driver.findElement(By.className("Home_ThirdPart__LSTEE"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
 
     public void clickOrderButtonTop() {
         wait.until(ExpectedConditions.elementToBeClickable(orderButtonTop)).click();
+    }
+
+    public void clickOrderButtonBottom() {
+        wait.until(ExpectedConditions.elementToBeClickable(orderButtonBottom)).click();
     }
 
     public void fillFirstOrderFormTop(String name, String surname, String address, String metro, String phone) {
@@ -59,6 +69,7 @@ public class OrderPage {
         wait.until(ExpectedConditions.elementToBeClickable(clientNumber)).sendKeys(phone);
         wait.until(ExpectedConditions.elementToBeClickable(nextButton)).click();
     }
+
     public void fillFirstOrderFormBottom(String name, String surname, String address, String metro, String phone) {
         wait.until(ExpectedConditions.elementToBeClickable(fieldName)).sendKeys(name);
         wait.until(ExpectedConditions.elementToBeClickable(fieldSurname)).sendKeys(surname);
@@ -68,6 +79,7 @@ public class OrderPage {
         wait.until(ExpectedConditions.elementToBeClickable(clientNumber)).sendKeys(phone);
         wait.until(ExpectedConditions.elementToBeClickable(nextButton)).click();
     }
+
     public void fillLastOrderForm(String date, String comment) {
         wait.until(ExpectedConditions.elementToBeClickable(fieldDeliverScooter)).sendKeys(date);
         wait.until(ExpectedConditions.elementToBeClickable(fieldComment)).sendKeys(comment);
@@ -107,9 +119,4 @@ public class OrderPage {
     public void clickButtonYes() {
         wait.until(ExpectedConditions.elementToBeClickable(buttonYes)).click();
     }
-
-    public void clickOrderButtonBottom() {
-        wait.until(ExpectedConditions.elementToBeClickable(orderButtonBottom)).click();
-    }
-
 }

@@ -49,8 +49,7 @@ public class ImportantQuestionsTests {
         CookieConsentHandler cookieHandler = new CookieConsentHandler(driver, wait);
         objHomePage.scrollToElement();
         cookieHandler.closeCookieConsentBanner();
-        objHomePage.clickQuestionPageNumber(questionNumber);
-        assertTrue(objHomePage.isAnswerToTheQuestion(questionNumber));
+        assertTrue(objHomePage.verifyQuestionAndAnswer(questionNumber));
     }
 
     @After
